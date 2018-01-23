@@ -1,29 +1,4 @@
-class BooleanOperator:
-    """
-    Equal
-    """
-    EQUAL = "="
-
-    """
-    Inferior
-    """
-    INFERIOR = "<="
-
-    """
-    NOT
-    """
-    NOT = "not"
-
-    """
-    AND
-    """
-    AND = "and"
-
-    """
-    OR
-    """
-    OR = "or"
-
+VALIDOPERATOR = ["=", "<=", "NOT", "OR", "AND"]
 
 class Condition:
     """
@@ -41,10 +16,13 @@ class Condition:
         - a bool (if its is 'True' or 'False')
     operator can be :
         - None,
-        - one of the operators detailed above
+        - one of the operators in the list above
     """
 
     def __init__(self, operande1, operande2=None, operator=None):
         self.operande1 = operande1
         self.operande2 = operande2
         self.operator = operator
+        if not operator is None:
+            if operator not in VALIDOPERATOR:
+                raise "OperatorException : Unvalid Operator"
