@@ -26,3 +26,5 @@ class Condition:
         if not operator is None:
             if operator not in VALIDOPERATOR:
                 raise "OperatorException : Unvalid Operator"
+
+    
