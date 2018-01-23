@@ -8,7 +8,7 @@ class Skip(Instruction):
         super().__init__(var1, var2)
 
 class Assign(Instruction):
-    def __init__(self, var1, var2 = None):
+    def __init__(self, var1, var2):
         super().__init__(var1, var2)
 
 class If(Instruction):
@@ -16,5 +16,5 @@ class If(Instruction):
         super().__init__(var1, var2)
 
 class While(Instruction):
-    def __init__(self, var1, var2 = None):
+    def __init__(self, var1, var2 = None, ):
         super().__init__(var1, var2)
