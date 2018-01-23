@@ -1,5 +1,7 @@
 class ArithmeticExpression:
     """
+    Mother class of every arithmetic expression.
+
     a and b can be :
         - arithmetic expression
         - an integer 

@@ -1,7 +1,7 @@
 class Instruction:
     def __init__(self):
         pass
-    
+
 class Skip(Instruction):
     """
     Skip : instruction which does nothing
