@@ -28,12 +28,12 @@ v7 = ('_', Variables, Skip)
 
 V = [v1, v2, v3, v4, v5, v6, v7]
 
-e1 = (v1, v2, Condition('X', 0, "<="), Skip)
-e2 = (v1, v3, Condition(Condition('X', 0, "<="), operator = "NOT"), Skip)
+e1 = (v1, v2, Condition('X', 0, "<="), Skip())
+e2 = (v1, v3, Condition(Condition('X', 0, "<="), operator = "NOT"), Skip())
 e3 = (v2, v4, Condition(True), Assign('X', '-X'))
 e4 = (v3, v4, Condition(True), Assign('X', '1-X'))
-e5 = (v4, v5, Condition('X', 1, "="), Skip)
-e6 = (v4, v5, Condition(Condition('X', 1, "="), operator = "NOT"), Skip)
+e5 = (v4, v5, Condition('X', 1, "="), Skip())
+e6 = (v4, v5, Condition(Condition('X', 1, "="), operator = "NOT"), Skip())
 e7 = (v5, v7, Condition(True), Assign('X', '1'))
 e8 = (v6, v7, Condition(True), Assign('X', 'X + 1'))
 
