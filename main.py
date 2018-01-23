@@ -1,8 +1,8 @@
 from criteria import Criteria
 from nodetype import NodeType
 from instructions import Assign, If, Skip, While
-from boolean_expression import Condition
-from arithmetic_expression import Add, Minus, Time
+from boolean_expression import BooleanExpression, Not, And, Or, Equal, InferiorOrEqual
+from arithmetic_expression import Variables, Add, Minus, Time
 
 from I_Analyse_de_couverture import analyse_couverture
 
@@ -26,14 +26,14 @@ V = [v1, v2, v3, v4, v5, v6, v7]
 """
 Edge (tuple) = origin node, destination node, Condition, Instruction
 """
-e1 = (v1, v2, Condition(Variables['X'], 0, "<="), Skip())
-e2 = (v1, v3, Condition(Condition(Variables['X'], 0, "<="), operator = "NOT"), Skip())
-e3 = (v2, v4, Condition(True), Assign(Variables['X'], Minus(0,Variables['X'])))
-e4 = (v3, v4, Condition(True), Assign(Variables['X'], Minus(1, Variables['X'])))
-e5 = (v4, v5, Condition(Variables['X'], 1, "="), Skip())
-e6 = (v4, v5, Condition(Condition(Variables['X'], 1, "="), operator = "NOT"), Skip())
-e7 = (v5, v7, Condition(True), Assign(Variables['X'], 1))
-e8 = (v6, v7, Condition(True), Assign(Variables['X'], Add(Variables['X'], 1)))
+e1 = (v1, v2, InferiorOrEqual(Variables['X'], 0), Skip())
+e2 = (v1, v3, Not(InferiorOrEqual(Variables['X'], 0)), Skip())
+e3 = (v2, v4, BooleanExpression("true"), Assign(Variables['X'], Minus(0, Variables['X'])))
+e4 = (v3, v4, BooleanExpression("true"), Assign(Variables['X'], Minus(1, Variables['X'])))
+e5 = (v4, v5, Equal(Variables['X'], 1), Skip())
+e6 = (v4, v5, Not(Equal(Variables['X'], 1)), Skip())
+e7 = (v5, v7, BooleanExpression("true"), Assign(Variables['X'], 1))
+e8 = (v6, v7, BooleanExpression("true"), Assign(Variables['X'], Add(Variables['X'], 1)))
 E = [e1, e2, e3, e4, e5, e6, e7, e8]
 
 """
@@ -47,8 +47,3 @@ Tests (list) : list of tests
 tests = []
 
 analyse_couverture(prog, [Criteria.TA], tests)
-
-
-
-
-
