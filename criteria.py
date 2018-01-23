@@ -11,19 +11,19 @@ class Criteria:
     sont évaluées au moins une fois VRAI et FAUX.
     """
     TD = 1
-    
+
     """
     k-TC : tous les k-chemins
     Tous les chemins de longueurs <= k sont parcourus/exécutés au moins par les tests
     """
     KTC = 2
-    
+
     """
     i-TB : toutes les i-boucles
     Tous les chemins qui passent au plus i fois dans une boucle WHILE sont parcourus par les tests.
     """
     ITB = 3
-    
+
     """
     T-Def : toutes les définitions
     Toutes les définitions des variables sont utilisées au moins une fois
@@ -47,4 +47,4 @@ class Criteria:
     TC : Toutes les conditions
     Tous les IF sont exécutés une fois VRAI une fois FAUX (au moins).
     """
-    TC  = 7
+    TC = 7
