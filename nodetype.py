@@ -1,4 +1,4 @@
-class Instruction:
+class NodeType:
     """
     None : Not IF nor While
     """
