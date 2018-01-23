@@ -4,7 +4,7 @@ class ArithmeticExpression:
 
     a and b can be :
         - arithmetic expression
-        - an integer 
+        - an integer
         - a variable
     """
     def __init__(self, a, b):
@@ -31,5 +31,3 @@ class Time(ArithmeticExpression):
     """
     def __init__(self, a, b):
         super().__init__(a, b)
-
-    
