@@ -17,16 +17,16 @@ tests = [] # liste de tests
 
 analyse_couverture(prog, [Criteria.TA], tests)
 
-V = [v1, v2, v3, v4, v5, v6, v7]
-v1 = (1, {}, If(X))
-v2 = (2, {}, Skip)
-v3 = (3, {}, Skip)
-v4 = (4, {}, If(X))
-v5 = (5, {}, Skip)
-v6 = (6, {}, Skip)
-v7 = (_, {}, Skip)
+Variables = {'X': None}
+v1 = (1, Variables, If('X'))
+v2 = (2, Variables, Skip)
+v3 = (3, Variables, Skip)
+v4 = (4, Variables, If('X'))
+v5 = (5, Variables, Skip)
+v6 = (6, Variables, Skip)
+v7 = ('_', Variables, Skip)
 
-E = [e1, e2, e3, e4, e5, e6, e7, e8]
+V = [v1, v2, v3, v4, v5, v6, v7]
 
 e1 = (v1, v2, Condition('X', 0, "<="), Skip)
 e2 = (v1, v3, Condition(Condition('X', 0, "<="), operator = "NOT"), Skip)
@@ -37,6 +37,7 @@ e6 = (v4, v5, Condition(Condition('X', 1, "="), operator = "NOT"), Skip)
 e7 = (v5, v7, Condition(True), Assign('X', '1'))
 e8 = (v6, v7, Condition(True), Assign('X', 'X + 1'))
 
+E = [e1, e2, e3, e4, e5, e6, e7, e8]
 
 
 
