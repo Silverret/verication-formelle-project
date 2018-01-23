@@ -24,6 +24,10 @@ class Add(ArithmeticExpression):
     """
     def __init__(self, a1, a2):
         super().__init__()
+        if isinstance(a1, int):
+            a1 = ArithmeticExpression(a1)
+        if isinstance(a2, int):
+            a2 = ArithmeticExpression(a2)
         self.a1 = a1
         self.a2 = a2
 
@@ -38,6 +42,10 @@ class Minus(ArithmeticExpression):
     """
     def __init__(self, a1, a2):
         super().__init__()
+        if isinstance(a1, int):
+            a1 = ArithmeticExpression(a1)
+        if isinstance(a2, int):
+            a2 = ArithmeticExpression(a2)
         self.a1 = a1
         self.a2 = a2
 
@@ -52,6 +60,10 @@ class Time(ArithmeticExpression):
     """
     def __init__(self, a1, a2):
         super().__init__()
+        if isinstance(a1, int):
+            a1 = ArithmeticExpression(a1)
+        if isinstance(a2, int):
+            a2 = ArithmeticExpression(a2)
         self.a1 = a1
         self.a2 = a2
 

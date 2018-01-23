@@ -19,10 +19,10 @@ print("a3 == 27 : ", a3()==27)
 
 
 Variables['X'] -= 1
-a1 = ArithmeticExpression(3)
+a1 = 3 # News here : on peut juste mettre l'int pour plus de lisibilité!
 a2 = ArithmeticExpression('X')
 
-a3 = Time(a1, a2)
+a3 = Time(a1, a2) # Time(3, 'X')
 print("a3 == 24 : ", a3()==24)
 
 
