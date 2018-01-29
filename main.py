@@ -10,7 +10,6 @@ from I_Analyse_de_couverture import analyse_couverture
 Variables (dict) : keys are variable's name (string), value are variable's value (integer)
 """
 X = Variable('X')
-Y = Variable('Y')
 """
 Vertice (tuple) : label, Variables (see above), NodeType
 """
