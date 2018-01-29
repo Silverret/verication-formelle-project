@@ -1,5 +1,5 @@
-from arithmetic_expression import *
-from boolean_expression import *
+from arithmetic_expression import ArithmeticExpression, Add, Minus, Time, VARIABLES
+from boolean_expression import BooleanExpression, And, Or, Not, Equal, InferiorOrEqual
 
 # Simple test avec des entiers
 a1 = ArithmeticExpression(3)

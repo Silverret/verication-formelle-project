@@ -1,4 +1,4 @@
-Variables = {}
+VARIABLES = {}
 
 class ArithmeticExpression(object):
     """
@@ -12,7 +12,7 @@ class ArithmeticExpression(object):
 
     def __call__(self):
         if isinstance(self.a, str):
-            return Variables[self.a]
+            return [Variablesself.a]
         elif isinstance(self.a, int):
             return self.a
 
