@@ -12,7 +12,7 @@ class ArithmeticExpression(object):
 
     def __call__(self):
         if isinstance(self.a, str):
-            return [Variablesself.a]
+            return VARIABLES[self.a]
         elif isinstance(self.a, int):
             return self.a
 
