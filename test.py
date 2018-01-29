@@ -1,4 +1,4 @@
-from arithmetic_expression import ArithmeticExpression, Add, Minus, Time, VARIABLES
+from arithmetic_expression import ArithmeticExpression, Add, Minus, Time, Variable
 from boolean_expression import BooleanExpression, And, Or, Not, Equal, InferiorOrEqual
 
 # Simple test avec des entiers
@@ -10,17 +10,16 @@ print("a3 == 7 : ", a3()==7)
 
 
 # Test avec des variables
-VARIABLES['X'] = 9 # Variables est un dict du module arithmetic_expression
 a1 = ArithmeticExpression(3)
-a2 = ArithmeticExpression('X')
+a2 = Variable('X')
+a2.value = 9
 
 a3 = Time(a1, a2)
 print("a3 == 27 : ", a3()==27)
 
 
-VARIABLES['X'] -= 1
+a2.value = None
 a1 = 3 # News here : on peut juste mettre l'int pour plus de lisibilité!
-a2 = ArithmeticExpression('X')
 
 a3 = Time(a1, a2) # Time(3, 'X')
 print("a3 == 24 : ", a3()==24)
@@ -32,4 +31,3 @@ print(" b : ", b())
 
 # Finally
 print("Equal(a3, 24) : ", Equal(a3, 24)())
-

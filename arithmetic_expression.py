@@ -1,20 +1,29 @@
-VARIABLES = {}
-
 class ArithmeticExpression(object):
     """
     Mother class of every arithmetic expression.
 
     If the mother class is instantiated,
-    a must be a string or an integer
+    a must be an integer
     """
     def __init__(self, a=None):
         self.a = a
 
     def __call__(self):
-        if isinstance(self.a, str):
-            return VARIABLES[self.a]
-        elif isinstance(self.a, int):
-            return self.a
+        return self.a
+
+class Variable(ArithmeticExpression):
+    """
+    Variable
+    """
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self.value = None
+
+    def __call__(self):
+        if not isinstance(self.value, int):
+            raise ArithmeticError
+        return self.value
 
 class Add(ArithmeticExpression):
     """
