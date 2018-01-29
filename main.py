@@ -41,8 +41,12 @@ Program (tuple) : (Vertices, Edges, entry node, final node)
 prog = (V, E)
 
 """
-Tests (list) : list of tests
+Tests (list) : set of tests
 """
-tests = []
+tests = set()
+tests.add({'X': 0})
+tests.add({'X': -1})
+tests.add({'X': 5})
+tests.add({'X': -8})
 
 analyse_couverture(prog, [Criteria.TA], tests)
