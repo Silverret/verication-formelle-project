@@ -28,10 +28,9 @@ def analyse_couverture(prog, criteria, tests):
         (4, (4, 6), {X: 5}),
         (6, (6, '_'), {X: 6}),
         ('_', None, {X: 6})])
-    
-    criteria = [Criteria.TA, Criteria.TD]
 
-    results = checkCriteria
+    criteria = [Criteria.TA, Criteria.TD]
+    pass
 
 
 def check_criteria(prog, criteria, paths):
@@ -45,9 +44,9 @@ def check_criteria(prog, criteria, paths):
     results = []
     for criterium in criteria:
         if criterium == Criteria.TA:
-            results.append(checkCriteriaTA(prog, paths))
+            results.append(check_criteriaTA(prog, paths))
         if criterium == Criteria.TD:
-            results.append(checkCriteriaTD(prog, paths))
+            results.append(check_criteriaTD(prog, paths))
 
     return results
 
@@ -105,5 +104,5 @@ def check_criteriaTD(prog, paths):
                 decisions_nodes_edges.remove(edge)
             except ValueError:
                 pass
-    
+
     return not bool(decisions_nodes_edges)
