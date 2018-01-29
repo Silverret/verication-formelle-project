@@ -10,7 +10,7 @@ print("a3 == 7 : ", a3()==7)
 
 
 # Test avec des variables
-Variables['X'] = 9 # Variables est un dict du module arithmetic_expression
+VARIABLES['X'] = 9 # Variables est un dict du module arithmetic_expression
 a1 = ArithmeticExpression(3)
 a2 = ArithmeticExpression('X')
 
@@ -18,7 +18,7 @@ a3 = Time(a1, a2)
 print("a3 == 27 : ", a3()==27)
 
 
-Variables['X'] -= 1
+VARIABLES['X'] -= 1
 a1 = 3 # News here : on peut juste mettre l'int pour plus de lisibilité!
 a2 = ArithmeticExpression('X')
 
