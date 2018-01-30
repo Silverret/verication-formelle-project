@@ -16,22 +16,39 @@ def analyse_couverture(prog, criteria, tests):
 
     :param prog: tree (V, E) of the program
     :param criteria: list of Criteria to test
-    :param tests: set of (dict) initial values
+    :param tests: list of (dict) initial values
 
     :return
     """
+    """
+    paths = []
+    for test in tests:
+        paths.append(parse(prog, test))
+    """
     X = aexp.Variable('X')
-    paths = set()
-    paths.add([
+    paths = []
+    paths.append([
         (1, (1, 2), {X: -5}),
         (2, (2, 4), {X: 5}),
         (4, (4, 6), {X: 5}),
         (6, (6, '_'), {X: 6}),
         ('_', None, {X: 6})])
+    paths.append([
+        (1, (1, 3), {X: 5}),
+        (3, (3, 4), {X: -4}),
+        (4, (4, 6), {X: -4}),
+        (6, (6, '_'), {X: -3}),
+        ('_', None, {X: -3})])
+    paths.append([
+        (1, (1, 2), {X: -1}),
+        (2, (2, 4), {X: 1}),
+        (4, (4, 5), {X: 1}),
+        (5, (5, '_'), {X: 1}),
+        ('_', None, {X: 1})])
 
-    criteria = [Criteria.TA, Criteria.TD]
-    pass
+    results = check_criteria(prog, criteria, paths)
 
+    print(results)
 
 def check_criteria(prog, criteria, paths):
     """
@@ -41,12 +58,12 @@ def check_criteria(prog, criteria, paths):
     :param criteria : list of criteria
     :return result
     """
-    results = []
+    results = {}
     for criterium in criteria:
         if criterium == Criteria.TA:
-            results.append(check_criteriaTA(prog, paths))
+            results['Criteria TA'] = check_criteriaTA(prog, paths)
         if criterium == Criteria.TD:
-            results.append(check_criteriaTD(prog, paths))
+            results['Criteria TD'] = check_criteriaTD(prog, paths)
 
     return results
 
@@ -65,7 +82,7 @@ def check_criteriaTA(prog, paths):
     graph, init_node, final_nodes = prog
     assign_edges = set()
     for edge, attr_dict in graph.edges.items():
-        instr = attr_dict['instr']
+        instr = attr_dict['instruction']
         if isinstance(instr, Assign):
             assign_edges.add(edge)
 
@@ -73,7 +90,7 @@ def check_criteriaTA(prog, paths):
         for node, edge, variables in path:
             try:
                 assign_edges.remove(edge)
-            except ValueError:
+            except KeyError:
                 pass
 
     return not bool(assign_edges)
@@ -96,13 +113,14 @@ def check_criteriaTD(prog, paths):
     for node, attr_dict in graph.nodes.items():
         node_type = attr_dict['node_type']
         if node_type in {NodeType.IF, NodeType.WHILE}:
-            decisions_nodes_edges.union({edge for edge in graph.edges if edge[0] == node})
+            decisions_nodes_edges |= {edge for edge in graph.edges if edge[0] == node}
 
     for path in paths:
         for node, edge, variables in path:
             try:
                 decisions_nodes_edges.remove(edge)
-            except ValueError:
+            except KeyError:
                 pass
 
     return not bool(decisions_nodes_edges)
+

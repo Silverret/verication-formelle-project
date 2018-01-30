@@ -25,6 +25,9 @@ class Variable(ArithmeticExpression):
             raise ArithmeticError
         return self.value
 
+    def __str__(self):
+        return "Variable." + self.name
+
 class Add(ArithmeticExpression):
     """
     Add : a1 + a2

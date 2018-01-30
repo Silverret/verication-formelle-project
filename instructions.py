@@ -1,3 +1,5 @@
+import arithmetic_expression as aexp
+
 class Instruction:
     def __init__(self):
         pass
@@ -8,6 +10,9 @@ class Skip(Instruction):
     """
     def __init__(self):
         super().__init__()
+
+    def execute(self):
+        pass
 
 class Assign(Instruction):
     """
@@ -24,6 +29,11 @@ class Assign(Instruction):
         super().__init__()
         self.x = x
         self.y = y
+        if isinstance(self.y, int):
+            self.y = aexp.ArithmeticExpression(self.y)
+
+    def execute(self):
+        self.x.value = self.y()
 
 class If(Instruction):
     """

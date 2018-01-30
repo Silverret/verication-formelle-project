@@ -1,20 +1,23 @@
-from trees import T, X
+from trees import PROG, TESTS
 
-
-def parse(tree):   
-    node = 1
-    test_list = []
-    while node != '_':
-        for e in tree.out_edges(node):
-            attr = tree.get_edge_data(e[0], e[1])
+def parse(prog, test):
+    for variable in test:
+        variable.value = test[variable]
+    graph, node, final_nodes = prog
+    path = []
+    while node not in final_nodes:
+        for e in graph.out_edges(node):
+            attr = graph.get_edge_data(e[0], e[1])
             if attr['condition']() == False:
                 pass
             else:
                 attr['instruction'].execute()
-                test_list.append(tuple((node, e, X.value)))
+                path.append((node, e, {variable.name : variable.value for variable in test}))
                 node = e[1]
-    test_list.append(tuple((node, None, X.value)))             
-    return test_list          
+    path.append((node, None, {variable.name : variable.value for variable in test}))
+    return path
 
-a = parse(T)
-print(a)
+p = parse(PROG, TESTS[1])
+
+print(p)
+import pdb; pdb.set_trace()
