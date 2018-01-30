@@ -50,4 +50,10 @@ TESTS.append({X: -1})
 TESTS.append({X: 5})
 TESTS.append({X: -8})
 
-analyse_couverture(PROG, [Criteria.TA, Criteria.TD], TESTS)
+CRITERIA = [
+    (Criteria.TA, None),
+    (Criteria.TD, None),
+    (Criteria.KTC, 4)
+]
+
+analyse_couverture(PROG, CRITERIA, TESTS)
