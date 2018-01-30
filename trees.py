@@ -53,8 +53,9 @@ TESTS.append({X: -8})
 
 CRITERIA = [
     (Criteria.TA, None),
-    (Criteria.TD, None)
-    #(Criteria.KTC, 4)
+    (Criteria.TD, None),
+    (Criteria.KTC, 5)
 ]
 
-analyse_couverture(PROG, CRITERIA, TESTS)
+if __name__ == '__main__':
+    analyse_couverture(PROG, CRITERIA, TESTS)

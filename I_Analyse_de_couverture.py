@@ -1,10 +1,7 @@
-import networkx as nx
-
-import arithmetic_expression as aexp
+import graph_functions as graph_func
 from nodetype import NodeType
 from criteria import Criteria
 from instructions import Assign
-from trees_functions import parse
 
 def analyse_couverture(prog, criteria, tests):
     """
@@ -21,32 +18,10 @@ def analyse_couverture(prog, criteria, tests):
 
     :return
     """
-    X = aexp.Variable('X')
     paths = []
     for test in tests:
-        path = parse(prog, test)
+        path = graph_func.parse(prog, test)
         paths.append(path)
-    # On peut supprimer les paths en commentaire ci-dessous    
-    """
-    paths.append([
-        (1, (1, 2), {'X': -5}),
-        (2, (2, 4), {'X': 5}),
-        (4, (4, 6), {'X': 5}),
-        (6, (6, '_'), {'X': 6}),
-        ('_', None, {'X': 6})])
-    paths.append([
-        (1, (1, 3), {'X': 5}),
-        (3, (3, 4), {'X': -4}),
-        (4, (4, 6), {'X': -4}),
-        (6, (6, '_'), {'X': -3}),
-        ('_', None, {'X': -3})])
-    paths.append([
-        (1, (1, 2), {'X': -1}),
-        (2, (2, 4), {'X': 1}),
-        (4, (4, 5), {'X': 1}),
-        (5, (5, '_'), {'X': 1}),
-        ('_', None, {'X': 1})])
-    """
 
     results = check_criteria(prog, criteria, paths)
 
@@ -66,6 +41,10 @@ def check_criteria(prog, criteria, paths):
             results['Criteria TA'] = check_criteriaTA(prog, paths)
         if criterium == Criteria.TD:
             results['Criteria TD'] = check_criteriaTD(prog, paths)
+        if criterium == Criteria.KTC:
+            results['Criteria %s-TC' % arg] = check_criteriaKTC(prog, paths, arg)
+        if criterium == Criteria.ITB:
+            results['Criteria %s-TB' % arg] = check_criteriaITB(prog, paths, arg)
 
     return results
 
@@ -77,7 +56,8 @@ def check_criteriaTA(prog, paths):
     - path is a list of tuple (node, edge, variables_state_after_the_edge)
 
     :param prog
-    :param paths : set of path
+    :param paths : list of path
+    :param k : k
 
     :return bool
     """
@@ -106,7 +86,8 @@ def check_criteriaTD(prog, paths):
     - path is a list of tuple (node, edge, variables_state_after_the_edge)
 
     :param prog
-    :param paths : set of path
+    :param paths : list of path
+    :param k : k
 
     :return bool
     """
@@ -126,3 +107,50 @@ def check_criteriaTD(prog, paths):
 
     return not bool(decisions_nodes_edges)
 
+def check_criteriaKTC(prog, paths, k):
+    """
+    Check the criteria k-TC, i.e. every 'smaller than k paths' were
+    executed at least one time.
+
+    Notation:
+    - path is a list of tuple (node, edge, variables_state_after_the_edge)
+
+    :param prog
+    :param paths : list of path
+    :param k : k
+
+    :return bool
+    """
+    graph, init_node, final_nodes = prog
+    smaller_than_k_paths = []
+    for final_node in final_nodes:
+        final_node_paths = graph_func.listSmallerThanKPaths(graph, init_node, final_node, k)
+        smaller_than_k_paths += final_node_paths
+    # print(smaller_than_k_paths)
+
+    for path in paths:
+        node_path = [node for (node, edge, var) in path]
+        # print(node_path)
+        try:
+            smaller_than_k_paths.remove(node_path)
+        except KeyError:
+            pass
+
+    return not bool(smaller_than_k_paths)
+
+def check_criteriaITB(prog, paths, i):
+    """
+    Check the criteria i-TB, i.e. every path in which the while loop are
+    executed at MOST i time are in paths.
+
+    Notation:
+    - path is a list of tuple (node, edge, variables_state_after_the_edge)
+
+    :param prog
+    :param paths : list of path
+    :param i : i
+
+    :return bool
+    """
+    #TODO
+    return False
