@@ -28,23 +28,23 @@ def analyse_couverture(prog, criteria, tests):
     X = aexp.Variable('X')
     paths = []
     paths.append([
-        (1, (1, 2), {X: -5}),
-        (2, (2, 4), {X: 5}),
-        (4, (4, 6), {X: 5}),
-        (6, (6, '_'), {X: 6}),
-        ('_', None, {X: 6})])
+        (1, (1, 2), {'X': -5}),
+        (2, (2, 4), {'X': 5}),
+        (4, (4, 6), {'X': 5}),
+        (6, (6, '_'), {'X': 6}),
+        ('_', None, {'X': 6})])
     paths.append([
-        (1, (1, 3), {X: 5}),
-        (3, (3, 4), {X: -4}),
-        (4, (4, 6), {X: -4}),
-        (6, (6, '_'), {X: -3}),
-        ('_', None, {X: -3})])
+        (1, (1, 3), {'X': 5}),
+        (3, (3, 4), {'X': -4}),
+        (4, (4, 6), {'X': -4}),
+        (6, (6, '_'), {'X': -3}),
+        ('_', None, {'X': -3})])
     paths.append([
-        (1, (1, 2), {X: -1}),
-        (2, (2, 4), {X: 1}),
-        (4, (4, 5), {X: 1}),
-        (5, (5, '_'), {X: 1}),
-        ('_', None, {X: 1})])
+        (1, (1, 2), {'X': -1}),
+        (2, (2, 4), {'X': 1}),
+        (4, (4, 5), {'X': 1}),
+        (5, (5, '_'), {'X': 1}),
+        ('_', None, {'X': 1})])
 
     results = check_criteria(prog, criteria, paths)
 
@@ -59,7 +59,7 @@ def check_criteria(prog, criteria, paths):
     :return result
     """
     results = {}
-    for criterium in criteria:
+    for criterium, arg in criteria:
         if criterium == Criteria.TA:
             results['Criteria TA'] = check_criteriaTA(prog, paths)
         if criterium == Criteria.TD:
