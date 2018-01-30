@@ -1,5 +1,3 @@
-from trees import PROG, TESTS
-
 def parse(prog, test):
     for variable in test:
         variable.value = test[variable]
@@ -16,8 +14,3 @@ def parse(prog, test):
                 node = e[1]
     path.append((node, None, {variable.name : variable.value for variable in test}))
     return path
-
-p = parse(PROG, TESTS[1])
-
-print(p)
-import pdb; pdb.set_trace()

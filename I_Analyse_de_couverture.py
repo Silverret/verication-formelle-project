@@ -4,6 +4,7 @@ import arithmetic_expression as aexp
 from nodetype import NodeType
 from criteria import Criteria
 from instructions import Assign
+from trees_functions import parse
 
 def analyse_couverture(prog, criteria, tests):
     """
@@ -20,13 +21,13 @@ def analyse_couverture(prog, criteria, tests):
 
     :return
     """
-    """
-    paths = []
-    for test in tests:
-        paths.append(parse(prog, test))
-    """
     X = aexp.Variable('X')
     paths = []
+    for test in tests:
+        path = parse(prog, test)
+        paths.append(path)
+    # On peut supprimer les paths en commentaire ci-dessous    
+    """
     paths.append([
         (1, (1, 2), {'X': -5}),
         (2, (2, 4), {'X': 5}),
@@ -45,6 +46,7 @@ def analyse_couverture(prog, criteria, tests):
         (4, (4, 5), {'X': 1}),
         (5, (5, '_'), {'X': 1}),
         ('_', None, {'X': 1})])
+    """
 
     results = check_criteria(prog, criteria, paths)
 
