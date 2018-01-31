@@ -126,14 +126,14 @@ def check_criteriaKTC(prog, paths, k):
     for final_node in final_nodes:
         final_node_paths = graph_func.listSmallerThanKPaths(graph, init_node, final_node, k)
         smaller_than_k_paths += final_node_paths
-    # print(smaller_than_k_paths)
+        # print(smaller_than_k_paths)
 
     for path in paths:
         node_path = [node for (node, edge, var) in path]
         # print(node_path)
         try:
             smaller_than_k_paths.remove(node_path)
-        except KeyError:
+        except ValueError:
             pass
 
     return not bool(smaller_than_k_paths)
