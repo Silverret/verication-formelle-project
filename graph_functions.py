@@ -1,4 +1,13 @@
+import instructions as inst
+import arithmetic_expression as aexp
+
 def parse(prog, test):
+    """
+    Parses a prog for a test
+
+    :param prog: graph, node, final_nodes
+    :param test: dictionary of variables and value
+    """
     for variable in test:
         variable.value = test[variable]
     graph, node, final_nodes = prog
@@ -65,3 +74,60 @@ def listSmallerThanKPaths(graph, s, d, k):
     listSmallerThanKPathsUtil(graph, s, d, path, paths, k)
 
     return paths
+
+def def_function(graph, node):
+    """
+    Returns a list of variables that are in the left term
+    of an assign expression (var = exp(other_vars)) on the exiting edges of the node
+    
+    :param graph
+    :param node: any node of the graph
+    """
+    def_var = []
+    for edge, edge_attr in graph.edges.items():
+        if node == edge[0]: 
+            instruction = edge_attr['instruction']
+            if isinstance(instruction, inst.Assign):
+                # x is the left term of our "Assign" method
+                variables = instruction.x
+                def_var += variables
+    return def_var
+
+
+def ref_function(graph, node):
+    """
+    Returns a list of variables that are:
+    - In a boolean expression in the condition of an exiting edge
+    - In the right term of an a assign expression (other_vars = exp(var)) in the instruction of an exiting edge
+    
+    :param graph
+    :param node: any node of the graph
+    """
+    ref_var = []
+    for edge, edge_attr in graph.edges.items():
+        if node == edge[0]: 
+            condition = edge_attr['condition']
+            instruction = edge_attr['instruction']
+            variables = check_variables(condition)
+            ref_var += variables
+            if isinstance(instruction, inst.Assign):
+                # y is the right term of our "Assign" method
+                variables = check_variables(instruction.y)
+                ref_var += variables
+    return ref_var
+
+def check_variables(expressions):
+    """
+    recursive function to check the variables used in expressions
+
+    :param value: 
+    """
+    variables = []
+    for variable in expressions.__dict__.values():
+        if isinstance(variable, aexp.Variable):
+            variables.append(variable)
+        elif variable is None or isinstance(variable, int) or isinstance(variable, str):
+            pass
+        else:
+            check_variables(variable)
+    return variables

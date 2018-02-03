@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import inspect
 
 import boolean_expression as bexp
 import arithmetic_expression as aexp
@@ -13,6 +14,7 @@ Variables (dict) : keys are variable's name (string), value are variable's value
 """
 
 X = aexp.Variable('X')
+Y = aexp.Variable('Y')
 
 """
 First graph, same as the one in the homework's instruction
