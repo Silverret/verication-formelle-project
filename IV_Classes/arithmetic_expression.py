@@ -1,3 +1,4 @@
+
 class ArithmeticExpression(object):
     """
     Mother class of every arithmetic expression.
@@ -10,6 +11,9 @@ class ArithmeticExpression(object):
 
     def __call__(self):
         return self.a
+    
+    def __repr__(self):
+        return str(self.a)
 
 class Variable(ArithmeticExpression):
     """
@@ -21,11 +25,9 @@ class Variable(ArithmeticExpression):
         self.value = None
 
     def __call__(self):
-        if not isinstance(self.value, int):
-            raise ArithmeticError
         return self.value
 
-    def __str__(self):
+    def __repr__(self):
         return "Variable." + self.name
 
 class Add(ArithmeticExpression):
@@ -46,6 +48,9 @@ class Add(ArithmeticExpression):
     def __call__(self):
         return self.a1() + self.a2()
 
+    def __repr__(self):
+        return f"Add({self.a1},{self.a2})"
+
 class Minus(ArithmeticExpression):
     """
     Minus : a1 - a2
@@ -64,6 +69,9 @@ class Minus(ArithmeticExpression):
     def __call__(self):
         return self.a1() - self.a2()
 
+    def __repr__(self):
+        return f"Minus({self.a1},{self.a2})"
+
 class Time(ArithmeticExpression):
     """
     Time :  a1 * a2
@@ -81,3 +89,6 @@ class Time(ArithmeticExpression):
 
     def __call__(self):
         return self.a1() * self.a2()
+
+    def __repr__(self):
+        return f"Time({self.a1},{self.a2})"

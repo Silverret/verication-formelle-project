@@ -2,11 +2,10 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import inspect
 
-import boolean_expression as bexp
-import arithmetic_expression as aexp
-import instructions as inst
-
-from nodetype import NodeType
+import IV_Classes.boolean_expression as bexp
+import IV_Classes.arithmetic_expression as aexp
+import IV_Classes.instructions as instr
+from IV_Classes.nodetype import NodeType
 
 
 """
@@ -33,17 +32,17 @@ T.add_node(6, node_type=NodeType.NONE)
 T.add_node('_', node_type=NodeType.NONE)
 
 """
-Edges : origin node, destination node, condition, instruction
+Edges : origin node, destination node, decision, instruction
 """
 
-T.add_edge(1, 2, condition=bexp.InferiorOrEqual(X, 0), instruction=inst.Skip())
-T.add_edge(1, 3, condition=bexp.Not(bexp.InferiorOrEqual(X, 0)), instruction=inst.Skip())
-T.add_edge(2, 4, condition=bexp.BooleanExpression("true"), instruction=inst.Assign(X, aexp.Minus(0, X)))
-T.add_edge(3, 4, condition=bexp.BooleanExpression("true"), instruction=inst.Assign(X, aexp.Minus(1, X)))
-T.add_edge(4, 5, condition=bexp.Equal(X, 1), instruction=inst.Skip())
-T.add_edge(4, 6, condition=bexp.Not(bexp.Equal(X, 1)), instruction=inst.Skip())
-T.add_edge(5, '_', condition=bexp.BooleanExpression("true"), instruction=inst.Assign(X, 1))
-T.add_edge(6, '_', condition=bexp.BooleanExpression("true"), instruction=inst.Assign(X, aexp.Add(X, 1)))
+T.add_edge(1, 2, decision=bexp.InferiorOrEqual(X, 0), instruction=instr.Skip())
+T.add_edge(1, 3, decision=bexp.Not(bexp.InferiorOrEqual(X, 0)), instruction=instr.Skip())
+T.add_edge(2, 4, decision=bexp.BooleanExpression("true"), instruction=instr.Assign(X, aexp.Minus(0, X)))
+T.add_edge(3, 4, decision=bexp.BooleanExpression("true"), instruction=instr.Assign(X, aexp.Minus(1, X)))
+T.add_edge(4, 5, decision=bexp.Equal(X, 1), instruction=instr.Skip())
+T.add_edge(4, 6, decision=bexp.Not(bexp.Equal(X, 1)), instruction=instr.Skip())
+T.add_edge(5, '_', decision=bexp.BooleanExpression("true"), instruction=instr.Assign(X, 1))
+T.add_edge(6, '_', decision=bexp.BooleanExpression("true"), instruction=instr.Assign(X, aexp.Add(X, 1)))
 
 """
 Second graph, similar to the first one, but with a while loop 
@@ -61,19 +60,19 @@ W.add_node(5, node_type=NodeType.NONE)
 W.add_node('_', node_type=NodeType.NONE)
 
 """
-Edges : origin node, destination node, condition, instruction
+Edges : origin node, destination node, decision, instruction
 """
 
-W.add_edge(1, 2, condition=bexp.InferiorOrEqual(X, 0), instruction=inst.Skip())
-W.add_edge(1, 3, condition=bexp.Not(bexp.InferiorOrEqual(X, 0)), instruction=inst.Skip())
-W.add_edge(2, 4, condition=bexp.BooleanExpression("true"), instruction=inst.Assign(X, aexp.Minus(0, X)))
-W.add_edge(3, 4, condition=bexp.BooleanExpression("true"), instruction=inst.Assign(X, aexp.Minus(1, X)))
-W.add_edge(4, 5, condition=bexp.InferiorOrEqual(X, 1), instruction=inst.Skip())
-W.add_edge(5, 4, condition=bexp.BooleanExpression("true"), instruction=inst.Assign(X, aexp.Add(X, 1)))
-W.add_edge(4, '_', condition=bexp.Not(bexp.InferiorOrEqual(X, 1)), instruction=inst.Skip())
+W.add_edge(1, 2, decision=bexp.InferiorOrEqual(X, 0), instruction=instr.Skip())
+W.add_edge(1, 3, decision=bexp.Not(bexp.InferiorOrEqual(X, 0)), instruction=instr.Skip())
+W.add_edge(2, 4, decision=bexp.BooleanExpression("true"), instruction=instr.Assign(X, aexp.Minus(0, X)))
+W.add_edge(3, 4, decision=bexp.BooleanExpression("true"), instruction=instr.Assign(X, aexp.Minus(1, X)))
+W.add_edge(4, 5, decision=bexp.InferiorOrEqual(X, 1), instruction=instr.Skip())
+W.add_edge(5, 4, decision=bexp.BooleanExpression("true"), instruction=instr.Assign(X, aexp.Add(X, 1)))
+W.add_edge(4, '_', decision=bexp.Not(bexp.InferiorOrEqual(X, 1)), instruction=instr.Skip())
 
 
-# nx.draw(W, with_labels = True)
-# nx.draw(T, with_labels = True)
-# plt.draw()
-# plt.show()
+#nx.draw(W, with_labels = True)
+#nx.draw(T, with_labels = True)
+#plt.draw()
+#plt.show()

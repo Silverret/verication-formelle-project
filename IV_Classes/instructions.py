@@ -1,4 +1,4 @@
-import arithmetic_expression as aexp
+import IV_Classes.arithmetic_expression as aexp
 
 class Instruction:
     def __init__(self):

@@ -1,4 +1,19 @@
-from arithmetic_expression import ArithmeticExpression
+from IV_Classes.arithmetic_expression import ArithmeticExpression
+
+
+def get_conditions_util(bexp, conditions):
+    if isinstance(bexp, And) or isinstance(bexp, Or):
+        get_conditions_util(bexp.b1, conditions)
+        get_conditions_util(bexp.b2, conditions)
+    elif isinstance(bexp, Not):
+        get_conditions_util(bexp.b, conditions)
+    else:
+        conditions.add(bexp)
+
+def get_conditions(bexp):
+    conditions = set()
+    get_conditions_util(bexp, conditions)
+    return conditions
 
 class BooleanExpression(object):
     """
@@ -14,6 +29,9 @@ class BooleanExpression(object):
                 raise "BooleanExpression Exception : Must be 'false' or 'true'."
 
     def __call__(self):
+        return eval(self.operande1.title())
+    
+    def __repr__(self):
         return eval(self.operande1.title())
 
 class Equal(BooleanExpression):
@@ -36,6 +54,9 @@ class Equal(BooleanExpression):
     def __call__(self):
         return self.a1() == self.a2()
 
+    def __repr__(self):
+        return f"Equal({self.a1},{self.a2})"
+
 class InferiorOrEqual(BooleanExpression):
     """
     Inferior : a1 <= a2
@@ -56,6 +77,9 @@ class InferiorOrEqual(BooleanExpression):
     def __call__(self):
         return self.a1() <= self.a2()
 
+    def __repr__(self):
+        return f"InferiorOrEqual({self.a1},{self.a2})"
+
 class Not(BooleanExpression):
     """
     Not : NOT b
@@ -68,6 +92,9 @@ class Not(BooleanExpression):
 
     def __call__(self):
         return not self.b()
+
+    def __repr__(self):
+        return f"Not({self.b})"
 
 class And(BooleanExpression):
     """
@@ -83,6 +110,9 @@ class And(BooleanExpression):
     def __call__(self):
         return self.b1() and self.b2()
 
+    def __repr__(self):
+        return f"And({self.b1},{self.b2})"
+
 
 class Or(BooleanExpression):
     """
@@ -97,3 +127,6 @@ class Or(BooleanExpression):
 
     def __call__(self):
         return self.b1() or self.b2()
+
+    def __repr__(self):
+        return f"Or({self.b1},{self.b2})"
