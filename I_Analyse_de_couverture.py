@@ -93,7 +93,7 @@ def check_criteriumTD(prog, paths):
     :return covered percentage, not covered elements
     """
     graph, _, _, _ = prog
-    decision_edges = gutils.get_decisions_edges(graph)
+    decision_edges = gutils.get_decision_edges(graph)
 
     tested_edges = {edge for path in paths for (_, edge, _) in path}
 
