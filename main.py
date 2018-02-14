@@ -30,6 +30,7 @@ CRITERIA = [
     (Criteria.TA, None),
     (Criteria.TD, None),
     (Criteria.KTC, 5),
+    (Criteria.ITB, 1),
     (Criteria.TDEF, None),
     (Criteria.TU, None),
     (Criteria.TC, None)

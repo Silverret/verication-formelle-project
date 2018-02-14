@@ -144,9 +144,17 @@ def check_criteriumITB(prog, paths, i):
 
     :return bool
     """
-    #TODO
-    return False
+    graph, init_node, final_nodes, _ = prog
+    i_loops_paths = set()
+    for final_node in final_nodes:
+        i_loops_paths |= gutils.get_i_loops_paths(graph, init_node, final_node, i)
+    
+    tested_paths = {tuple((node for (node, _, _) in path)) for path in paths}
 
+    not_covered_i_loops_paths = i_loops_paths.difference(tested_paths)
+
+    return "{:.0%}".format(1-len(not_covered_i_loops_paths)/len(i_loops_paths)), \
+            not_covered_i_loops_paths
 
 def check_criteriumTDef(prog, paths):
     """
