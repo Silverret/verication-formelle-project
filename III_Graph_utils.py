@@ -53,8 +53,6 @@ def ref_function(graph, node):
 def check_variables(expressions):
     """
     recursive function to check the variables used in expressions
-
-    :param value: 
     """
     variables = []
     for variable in expressions.__dict__.values():
