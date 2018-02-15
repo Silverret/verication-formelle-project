@@ -33,6 +33,7 @@ CRITERIA = [
     (Criteria.ITB, 1),
     (Criteria.TDEF, None),
     (Criteria.TU, None),
+    (Criteria.TDU, None),
     (Criteria.TC, None)
 ]
 
