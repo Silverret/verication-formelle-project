@@ -2,6 +2,7 @@ import IV_Classes.instructions as inst
 import IV_Classes.arithmetic_expression as aexp
 from IV_Classes.nodetype import NodeType
 from IV_Classes.instructions import Assign
+import networkx as nx
 
 def parse(prog, test):
     """
@@ -197,3 +198,36 @@ def get_assign_edges(graph):
         if isinstance(instr, Assign):
             assign_edges.add(edge)
     return assign_edges
+
+def add_loops(graph, s, d, paths):
+    simple_cycles = nx.simple_cycles(graph)
+    new_paths = list(nx.all_simple_paths(graph, s, d))
+    for cycle in simple_cycles:
+        for path in paths:
+            if cycle[0] in path:
+                index = path.index(cycle[0])
+                new_path = list(path)
+                new_path[index:index] = cycle
+                new_paths.append(new_path)
+    return new_paths
+
+def get_i_loops_paths(graph, s, d, i):
+    """
+    Lists all paths with smaller that i loops from 's' to 'd'
+    """
+    paths = nx.all_simple_paths(graph, s, d)
+    j = 0
+    if i == 0:
+        return paths
+    else:
+        while j < i:
+            paths = add_loops(graph, s, d, paths)
+            j += 1
+    set_paths = set()
+    for path in paths:
+        set_paths.add(tuple(path.copy()))
+    # to convert the list into set
+    return set_paths
+
+
+

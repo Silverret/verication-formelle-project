@@ -72,7 +72,7 @@ W.add_edge(5, 4, decision=bexp.BooleanExpression("true"), instruction=instr.Assi
 W.add_edge(4, '_', decision=bexp.Not(bexp.InferiorOrEqual(X, 1)), instruction=instr.Skip())
 
 
-#nx.draw(W, with_labels = True)
+# nx.draw(W, with_labels = True)
 #nx.draw(T, with_labels = True)
-#plt.draw()
-#plt.show()
+# plt.draw()
+# plt.show()
