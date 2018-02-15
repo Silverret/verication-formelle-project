@@ -115,8 +115,8 @@ def find_test(prog, path):
     
     #
     # Ici générer les contraintes pour le solveur constraint
-    # à partir des contraintes exprimées avec nos classes. 
-    #    
+    # à partir des contraintes exprimées avec nos classes.
+    #
 
 def symbolic_execute_edge(variables, graph, path_edge):
     cons = None
