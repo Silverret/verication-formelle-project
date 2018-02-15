@@ -1,6 +1,7 @@
 from IV_Classes.arithmetic_expression import ArithmeticExpression, Add, Minus, Time, Variable
 from IV_Classes.boolean_expression import BooleanExpression, And, Or, Not, Equal, InferiorOrEqual, get_conditions
 
+"""
 # Simple test avec des entiers
 a1 = ArithmeticExpression(3)
 a2 = ArithmeticExpression(10)
@@ -41,3 +42,14 @@ conditions2 = get_conditions(Not(b3))
 print(conditions1)
 print(conditions2)
 print(conditions1 == conditions2)
+"""
+
+a1 = Variable('X')
+a2 = Add(a1, 1)
+
+a3 = Time(a1, 3)
+
+a3 = a3.replace(a1, a2)
+a3 = a3.replace(a1, "X")
+
+print(a3)

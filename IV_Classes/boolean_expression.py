@@ -29,10 +29,13 @@ class BooleanExpression(object):
                 raise "BooleanExpression Exception : Must be 'false' or 'true'."
 
     def __call__(self):
-        return eval(self.operande1.title())
+        return str(eval(self.operande1.title()))
     
     def __repr__(self):
-        return eval(self.operande1.title())
+        return str(eval(self.operande1.title()))
+
+    def replace(self, old_a, new_a):
+        return self
 
 class Equal(BooleanExpression):
     """
@@ -57,6 +60,9 @@ class Equal(BooleanExpression):
     def __repr__(self):
         return f"Equal({self.a1},{self.a2})"
 
+    def replace(self, old_a, new_a):
+        return Equal(self.a1.replace(old_a, new_a), self.a2.replace(old_a, new_a))
+
 class InferiorOrEqual(BooleanExpression):
     """
     Inferior : a1 <= a2
@@ -80,6 +86,9 @@ class InferiorOrEqual(BooleanExpression):
     def __repr__(self):
         return f"InferiorOrEqual({self.a1},{self.a2})"
 
+    def replace(self, old_a, new_a):
+        return InferiorOrEqual(self.a1.replace(old_a, new_a), self.a2.replace(old_a, new_a))
+
 class Not(BooleanExpression):
     """
     Not : NOT b
@@ -95,6 +104,9 @@ class Not(BooleanExpression):
 
     def __repr__(self):
         return f"Not({self.b})"
+
+    def replace(self, old_a, new_a):
+        return Not(self.b.replace(old_a, new_a))
 
 class And(BooleanExpression):
     """
@@ -113,6 +125,9 @@ class And(BooleanExpression):
     def __repr__(self):
         return f"And({self.b1},{self.b2})"
 
+    def replace(self, old_a, new_a):
+        return And(self.b1.replace(old_a, new_a), self.b2.replace(old_a, new_a))
+
 
 class Or(BooleanExpression):
     """
@@ -130,3 +145,6 @@ class Or(BooleanExpression):
 
     def __repr__(self):
         return f"Or({self.b1},{self.b2})"
+
+    def replace(self, old_a, new_a):
+        return Or(self.b1.replace(old_a, new_a), self.b2.replace(old_a, new_a))
