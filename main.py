@@ -9,6 +9,7 @@ from IV_Classes.nodetype import NodeType
 from IV_Classes.criteria import Criteria
 
 from I_Analyse_de_couverture import analyse_coverage
+from II_Generation_de_tests import generate_tests
 
 from trees import T, W, X
 
@@ -37,6 +38,9 @@ CRITERIA = [
 ]
 
 if __name__ == '__main__':
+    generate_tests(PROG1, Criteria.TA)
+
+    """
     RESULT1 = analyse_coverage(PROG1, CRITERIA, TESTS)
     RESULT2 = analyse_coverage(PROG2, CRITERIA, TESTS)
 
@@ -50,5 +54,7 @@ if __name__ == '__main__':
     for crit, res in RESULT2.items():
         percentage, uncovered_set = res
         print(f"\t {crit}: {percentage}, {uncovered_set}")
+    """
+    
 
     

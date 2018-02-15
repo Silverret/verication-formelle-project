@@ -1,4 +1,6 @@
 from itertools import product
+from collections import OrderedDict
+from copy import deepcopy
 
 import networkx as nx
 import constraint as csp
@@ -6,6 +8,7 @@ import constraint as csp
 import III_Graph_utils as gutils
 import IV_Classes.boolean_expression as bexp
 import IV_Classes.arithmetic_expression as aexp
+import IV_Classes.instructions as instructions
 from IV_Classes.criteria import Criteria
 
 NODE = 0
@@ -25,11 +28,12 @@ def generate_tests(prog, criterium, arg=None):
         paths = get_paths(prog, elem, elem_type)
         for path in paths:
             # Try to find a tests which enable to parse this path
-            test = find_test(prog, path)
+            find_test(prog, path)
+            """
             if not test is None:
                 tests.add(test)
                 break
-
+            """
     return tests           
 
 
@@ -89,27 +93,45 @@ def sublist(ls1, ls2):
     return True
 
 def find_test(prog, path):
-    path_edges = {(path[i], path[i+1]) for i in range(len(path)-1)}
+    path_edges = [(path[i], path[i+1]) for i in range(len(path)-1)]
 
     graph, _, _, variables = prog
 
-    variables = {variable: variable for variable in variables}
-    problem = csp.Problem()
+    variables = OrderedDict({variable: variable for variable in variables})
+    constraints = set()
 
+    for path_edge in path_edges:
+        variables, cons = symbolic_execute_edge(variables, graph, path_edge)
+        constraints.add(cons)
+
+    import pdb; pdb.set_trace()
+
+    problem = csp.Problem()
     domain = range(-10,11)
     for variable in variables:
         problem.addVariable(variable.name, domain)
+
+    variable_name = tuple((variable.name for variable in variables))
     
-    assign_list = []
-    for path_edge in path_edges:
-        decision = graph.edges[path_edge]['decision']
-        # Find the set of n-uplets which satisfy the decision
-        
+    #
+    # Ici générer les contraintes pour le solveur constraint
+    # à partir des contraintes exprimées avec nos classes. 
+    #    
 
-        
+def symbolic_execute_edge(variables, graph, path_edge):
+    cons = None
 
+    dec = graph.edges[path_edge]['decision']
+    cons = deepcopy(dec)
+    for var, value in variables.items():
+        cons = cons.replace(var, value)
 
-    
+    instr = graph.edges[path_edge]['instruction']
+    if isinstance(instr, instructions.Assign):
+        instr_y = deepcopy(instr.y)
+        for var, value in variables.items():
+            instr_y = instr_y.replace(var, value)
+        variables[instr.x] = instr_y
 
-
+    return variables, cons
 
