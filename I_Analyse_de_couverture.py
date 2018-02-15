@@ -50,6 +50,8 @@ def check_criteria(prog, criteria, paths):
             results['Criteria TDef'] = check_criteriumTDef(prog, paths)
         elif criterium == Criteria.TU:
             results['Criteria TU'] = check_criteriumTU(prog, paths)
+        elif criterium == Criteria.TDU:
+            results['Criteria TDU'] = check_criteriumTDU(prog, paths)
         elif criterium == Criteria.TC:
             results['Criteria TC'] = check_criteriumTC(prog, paths)
 
@@ -232,6 +234,73 @@ def check_criteriumTU(prog, paths):
     
     return "{:.0%}".format(1-len(not_fully_used_definitions)/len(definitions)), \
             not_fully_used_definitions
+
+def check_criteriumTDU(prog, paths):
+    """
+    Check the criterium TDU, i.e. for every couple definition-utilisation of a variable X, all simple paths
+    without a redefinition of X in-between are executed at least once. 
+
+    Notation:
+    - path is a list of tuple (node, edge, variables_state_after_the_edge)
+
+    :param prog
+    :param paths : list of path
+
+    :return bool
+    """
+    graph, _, _, _ = prog
+    all_valid_paths = []
+    definitions = []
+    fully_used_definitions = []
+
+    for def_node in graph.nodes:
+        variables = gutils.def_function(graph, def_node)
+        for variable in variables:
+            # Create the reachable ref list
+            reachable_ref_nodes = set()
+            for ref_node in graph.nodes:
+                if ref_node is def_node:
+                    continue
+                if variable not in gutils.ref_function(graph, ref_node):
+                    continue
+                if not nx.has_path(graph, def_node, ref_node):
+                    continue
+                k = max(len(path) for path in paths)
+                for nodes_path in gutils.get_smaller_than_k_paths(graph, def_node, ref_node, k):
+                    path = [(node, _, _) for node in nodes_path]
+                    if gutils.path_used_def_ref(graph, variable, def_node, ref_node, path):
+                        reachable_ref_nodes.add(ref_node)
+
+            # to fill definitions with all simple paths from def_node to ref_node
+            for ref_node in reachable_ref_nodes:
+                all_reachable_simple_paths = nx.all_simple_paths(graph, def_node, ref_node)
+                for reachable_simple_path in all_reachable_simple_paths:
+                    definitions.append((variable, reachable_simple_path))
+
+            for ref_node in reachable_ref_nodes:
+                all_simple_paths = nx.all_simple_paths(graph, def_node, ref_node)
+                for simple_path in all_simple_paths:
+                    edited_path = [(n, _, _) for n in simple_path]
+                    # to get the same structure as TU
+                    if gutils.path_used_def_ref(graph, variable, def_node, ref_node, edited_path):
+                        all_valid_paths.append(simple_path)
+                for path in paths:
+                    path = [n for (n, _, _) in path]
+                    for valid_path in all_valid_paths:
+                        if set(valid_path).issubset(path):
+                            fully_used_definitions.append((variable, valid_path))
+    # tranform the set to list                        
+    fully_used_list = []
+    for p in fully_used_definitions:
+        if p not in fully_used_list:
+            fully_used_list.append(p)
+
+    not_fully_used_definitions = []
+    not_fully_used_definitions = [i for i in definitions + fully_used_list if i not in definitions or i not in fully_used_list]
+    
+    return "{:.0%}".format(1-len(not_fully_used_definitions)/len(definitions)), \
+            not_fully_used_definitions
+
 
 def check_criteriumTC(prog, paths):
     """
