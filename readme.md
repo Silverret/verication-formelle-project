@@ -12,7 +12,28 @@ Dans ```trees.py```, nous avons ainsi construit deux graphes: celui de la consig
 
 Lancer la commande ```python main.py``` et vous obtiendrez ce résultat:
 
-TODO: mettre un screenshot du résultat
+```
+Results for Prog1
+         Criteria TA: 100%, set()
+         Criteria TD: 100%, set()
+         Criteria 5-TC: 75%, {(1, 3, 4, 5, '_')}
+         Criteria 1-TB: 75%, {(1, 3, 4, 5, '_')}
+         Criteria TDef: 50%, {(Variable.X, 6), (Variable.X, 5)}
+         Criteria TU: 50%, {(Variable.X, 6), (Variable.X, 5)}
+         Criteria TDU: 100%, []
+         Criteria TC: 100%, set()
+
+
+Results for Prog2
+         Criteria TA: 100%, set()
+         Criteria TD: 100%, set()
+         Criteria 5-TC: 50%, {(1, 3, 4, '_')}
+         Criteria 1-TB: 50%, {(1, 3, 4, '_'), (1, 3, 4, 5, 4, '_')}
+         Criteria TDef: 100%, set()
+         Criteria TU: 100%, set()
+         Criteria TDU: 100%, []
+         Criteria TC: 100%, set()
+```
 
 * Il est possible de créer de nouveaux graphes dans trees.py, ainsi que de nouvelles variables.
 * Il suffit ensuite de les importer dans main.py puis de créer un objet PROG qui contient le graphe, le noeud intial, les noeuds finaux et les variables utilisées.
