@@ -18,7 +18,6 @@ TODO: mettre un screenshot du résultat
 * Il suffit ensuite de les importer dans main.py puis de créer un objet PROG qui contient le graphe, le noeud intial, les noeuds finaux et les variables utilisées.
 * Lancer la fonction analyse_coverage avec le PROG, un set de critères et un set de tests.
 
-
 ### Architecture
 
 #### IV\_Classes
@@ -38,12 +37,8 @@ Utilie le package constraint
 Nous n'avons pas réussi à finir cette partie. Nous avons réalisé l'exécution symbolique du programme donné à la génération de tests, en implémentant en fonction replace à toutes nos classes héritant d'ArithmeticExpression et/ou BooleanExpression.
 À la fin de l'exécution symbolique, on obtiens une liste de booléenne expressions exprimées en fonction des input du programme qui doivent être vrais. Nous n'avons pas réussi à exprimer ces expressions booléennes en contraintes que le constraint.problem comprend. 
 
-
 #### III\_Graph\_utils
 
 Contient toutes les fonctions propres aux graphes et utiles pour l'analyse de couverture.
 
 Par exemple la fonction ```parse()``` qui parcours un graph donné pour un jeu de test et qui renvoie le chemin parcouru ainsi que l'état des variables à chaque étape.
-
-
-
