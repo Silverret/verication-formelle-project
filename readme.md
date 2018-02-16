@@ -21,22 +21,25 @@ TODO: mettre un screenshot du résultat
 
 ### Architecture
 
-#### IV_Classes
+#### IV\_Classes
 
 Contient les classes ArithmeticExpression, BooleanExpression, Criteria, Instruction et NodeType dans lesquelles nous avons défini formellement les outils utilisés.
 
-#### I_Analyse_de_couverture
+#### I\_Analyse\_de\_couverture
 
 Contient les fonctions qui permettent de vérifier un critère particulier.
 
-#### II_Generation_de_tests
+#### II\_Generation\_de\_tests
 
 Permet de faire la génération de tests
 
-TODO: expliquer ce qu'on a fait et là ou on est arrivé.
+Utilie le package constraint
+
+Nous n'avons pas réussi à finir cette partie. Nous avons réalisé l'exécution symbolique du programme donné à la génération de tests, en implémentant en fonction replace à toutes nos classes héritant d'ArithmeticExpression et/ou BooleanExpression.
+À la fin de l'exécution symbolique, on obtiens une liste de booléenne expressions exprimées en fonction des input du programme qui doivent être vrais. Nous n'avons pas réussi à exprimer ces expressions booléennes en contraintes que le constraint.problem comprend. 
 
 
-#### III_Graph_utils
+#### III\_Graph\_utils
 
 Contient toutes les fonctions propres aux graphes et utiles pour l'analyse de couverture.
 
