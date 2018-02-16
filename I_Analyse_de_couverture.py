@@ -250,8 +250,8 @@ def check_criteriumTDU(prog, paths):
     """
     graph, _, _, _ = prog
     all_valid_paths = []
-    definitions = []
-    fully_used_definitions = []
+    simple_paths_def_to_ref = []
+    used_paths_def_to_ref = []
 
     for def_node in graph.nodes:
         variables = gutils.def_function(graph, def_node)
@@ -271,11 +271,11 @@ def check_criteriumTDU(prog, paths):
                     if gutils.path_used_def_ref(graph, variable, def_node, ref_node, path):
                         reachable_ref_nodes.add(ref_node)
 
-            # to fill definitions with all simple paths from def_node to ref_node
+            # to fill simple_paths_def_to_ref with all simple paths from def_node to ref_node
             for ref_node in reachable_ref_nodes:
                 all_reachable_simple_paths = nx.all_simple_paths(graph, def_node, ref_node)
                 for reachable_simple_path in all_reachable_simple_paths:
-                    definitions.append((variable, reachable_simple_path))
+                    simple_paths_def_to_ref.append((variable, reachable_simple_path))
 
             for ref_node in reachable_ref_nodes:
                 all_simple_paths = nx.all_simple_paths(graph, def_node, ref_node)
@@ -288,18 +288,18 @@ def check_criteriumTDU(prog, paths):
                     path = [n for (n, _, _) in path]
                     for valid_path in all_valid_paths:
                         if set(valid_path).issubset(path):
-                            fully_used_definitions.append((variable, valid_path))
+                            used_paths_def_to_ref.append((variable, valid_path))
     # tranform the set to list                        
     fully_used_list = []
-    for p in fully_used_definitions:
+    for p in used_paths_def_to_ref:
         if p not in fully_used_list:
             fully_used_list.append(p)
 
-    not_fully_used_definitions = []
-    not_fully_used_definitions = [i for i in definitions + fully_used_list if i not in definitions or i not in fully_used_list]
+    not_fully_used_list = []
+    not_fully_used_list = [i for i in simple_paths_def_to_ref + fully_used_list if i not in simple_paths_def_to_ref or i not in fully_used_list]
     
-    return "{:.0%}".format(1-len(not_fully_used_definitions)/len(definitions)), \
-            not_fully_used_definitions
+    return "{:.0%}".format(1-len(not_fully_used_list)/len(simple_paths_def_to_ref)), \
+            not_fully_used_list
 
 
 def check_criteriumTC(prog, paths):
